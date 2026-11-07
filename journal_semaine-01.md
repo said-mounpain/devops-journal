@@ -262,7 +262,7 @@ drwxr-xr-x 6 root root 4096 Nov  6 22:25 ..
 | Utilisateur | Commande | Résultat |
 |---|---|---|
 | **mboa** (membre de `mboa`) | `sudo -u mboa cat /srv/mboamarket/config/.env` | ✅ fic>
-| **jules** (non membre) | `sudo -u jules cat /srv/mboamarket/config/.env` | ❌ `Permission>
+| **jules** (non membre) | `sudo -u jules cat /srv/mboamarket/config/.env` | ❌ `Permission>|
 
 ---
 ## OPS-105 - Incident: les photos ne s'envoient plus
@@ -351,7 +351,7 @@ drwxrwx--- 2 root mboa   4096 Nov  4 19:56 uploads
    on insère la ligne suivante dans l'éditeur
    koffi ALL=(root) NOPASSWD: /usr/local/bin/mboa-deploy
 ```
-> [!TIPE]
+> [!TIP]
 >Une erreur de syntaxe dans /etc/sudoers n'est pas un incident bénin : sudo refuse alors le fichier entier et plus personne ne peut élever ses privilèges, y compris vous. Sur un serveur distant sans accès console, cela devient un incident de production. C'est la raison d'être de visudo : il ouvre une copie de travail, verrouille le fichier contre les éditions concurrentes et surtout contrôle la syntaxe avant de remplacer l'original.
 
 ### 2.On met le fichier contenant la règle en lecture seule pour le root et le groupe root par sécurité
@@ -410,10 +410,10 @@ sudo -u koffi sudo -n /usr/local/bin/mboa-deploy
 ```
 ### on vérifie que koffi ne peut lancer aucune autre commande
 ```bash
-  sudo -u koffi  /bin/ls
+ sudo -u koffi sudo -n /bin/ls
 ```
 ```text
-/bin/ls: cannot open directory '.': Permission denied
+sudo: a password is required
 ```
 ### koffi n'est pas dans le group sudo
 ```bash
@@ -426,16 +426,12 @@ uid=1004(koffi) gid=1005(koffi) groups=1005(koffi),1003(equipe)
 
 ## Bilan de la semaine
 
-    Comptes individuels créés pour Amina et Koffi, ajoutés au groupe equipe.
+    Création des comptes utilisateurs avec droits propices .
 
-    Dossier partagé /srv/mboamarket/partage opérationnel avec 2770 + SGID.
+    Partage d'un dossier entre plusieurs utilisateurs.
 
-    Critères d'acceptation vérifiés par des tests concrets (amina ✅ / jules ❌).
+    Gestion d'un incident en production.
 
-    Journal versionné sur GitHub, en Markdown, pour être lisible par l'équipe.
-
-    OPS-104 : /srv/mboamarket/config/.env en root:mboa 640 — lisible par mboa ✅, refusé pour jules ❌.
-
-    OPS-105 : cause trouvée dans app.log (droits d'écriture manquants sur uploads) ; corrigé avec mboa en 750 — mboa écrit ✅, jules refusé ❌.
+    Délégation des droits root pour une tâche précise à un utilisateur non root
 
     OPS-106 : règle /etc/sudoers.d/50-koffi-deploy (koffi ALL=(root) NOPASSWD: /usr/local/bin/mboa-deploy, 440), validée par visudo -c et sudo -lU — koffi lance le déploiement sans mot de passe, aucune autre commande root, pas dans sudo.
