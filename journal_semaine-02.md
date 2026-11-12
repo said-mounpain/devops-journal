@@ -1,4 +1,4 @@
-# Journal de bord — Semaine 1 (02 au 08 novembre 2026)
+# Journal de bord — Semaine 2 (09 au 11 novembre 2026)
 
 > « Ce qui n'est pas écrit n'a pas été fait. »
 
