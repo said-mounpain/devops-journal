@@ -206,7 +206,8 @@ WantedBy=multi-user.target
 
 ```
 
-> [!NOTE] On peut observer que le chemin vers `api` n'est pas absolu 
+> [!NOTE]
+> On peut observer que le chemin vers `api` n'est pas absolu 
 > il faut vérifier la librairie python installé dans notre machine
 
 ### 3. On vérifie le python installé dans notre machine
@@ -222,7 +223,8 @@ python3
 python3.12
 
 ```
-> [!NOTE] On observe que c'est python3 qui est installé et donc on doit éxécuter le fichier avec `python3`
+> [!NOTE]
+> On observe que c'est python3 qui est installé et donc on doit éxécuter le fichier avec `python3`
 
 ### 4. On modifie le fichier de service
 
@@ -256,7 +258,8 @@ ls -l /srv/mboamarket/app/api.py
 ```text
 -rw-r----- 1 root root 600 Nov  4 19:56 /srv/mboamarket/app/api.py
 ```
-> [!NOTE] l'utilisateur `mboa` n'a aucun droit sur le fichier `api.py` 
+> [!NOTE]
+> l'utilisateur `mboa` n'a aucun droit sur le fichier `api.py` 
 > le fichier n'est pas éxécutable
 
 ### 6. On attribut les droits d'éxécution à l'utilisateur mboa 
@@ -283,7 +286,8 @@ systemctl status mboa-api
         CPU: 2ms
 
 ```
->[!NOTE] le service a une erreur `status=200/CHDIR` ce qui suggère une erreur dans le fichier du service
+>[!NOTE]
+> le service a une erreur `status=200/CHDIR` ce qui suggère une erreur dans le fichier du service
 > `200/CHDIR` est une erreur en lien avec la ligne `WorkingDirectory`
 
 ### 8. on cherche le contenu de WorkingDirectory
@@ -359,7 +363,8 @@ cp /srv/mboamarket/data/commandes.csv "$dossier/commandes-${date_jour}.csv"
 echo "Le fichiercommandes-{date_jour} a bien été sauvegardé"
 
 ```
-> [!NOTE] le caractère `\` devant le shebang n'existe pas c'est juste pour eviter que makedown interprête cella comme un titre
+> [!NOTE] 
+>le caractère `\` devant le shebang n'existe pas c'est juste pour eviter que makedown interprête cella comme un titre
 
 ### 2- On crée un service qui va exécuter le bash précédent
 ```bash
@@ -377,7 +382,8 @@ Type=oneshot
 ExecStart=/bin/bash /usr/local/bin/mboa-sauvegarde
 
 ```
-> [!NOTE] le service doit être éxécuté par l'utilisateur `mboa` et donc de groupe `mboa`. De plus, il doit s'éxécuter une seule fois `Type=oneshot`.
+> [!NOTE]
+> le service doit être éxécuté par l'utilisateur `mboa` et donc de groupe `mboa`. De plus, il doit s'éxécuter une seule fois `Type=oneshot`.
 > il faut aussi s'assurer du chemin absolu de votre bash sur votre machine car `/usr/bin/bash` marche chez certains mais d'autre comme moi c'est ce qui est écrit plus haut.
 ### 3- On crée le timer du service mboa-sauvegarde qui va le lancer toutes les 5 minutes
 ```bash
@@ -396,7 +402,8 @@ Persistent=true
 WantedBy=timers.target
 
 ```
-> [!TIPE] c'est important de mettre `Persistent=true` pour que le timer puisse rattraper les tâches non faites en cas d'arrêt de la machine.
+> [!TIPE]
+> c'est important de mettre `Persistent=true` pour que le timer puisse rattraper les tâches non faites en cas d'arrêt de la machine.
 > Vérifier la prochaine date du lancement du service avec `systemd-analyze calendar`
 ### 4- On active le timer 
 ```bash
@@ -415,7 +422,8 @@ sudo systemctl status mboa-sauvegarde.timer
 Nov 11 22:17:49 said systemd[1]: Started mboa-sauvegarde.timer - Sauvegarde toute les 5 min.
 
 ```
-> [!NOTE] le système va redémarrer dans 3s (`3s left`)
+> [!NOTE]
+> le système va redémarrer dans 3s (`3s left`)
 ### 5-On vérifie les sauvegardes précédentes
 ```bash
 sudo ls /var/backups/mboamarket/ | tail -5
@@ -445,7 +453,8 @@ commandes-20261112-2105.csv
 Nov 07 17:58:21 said mboa-paiement[52026]: Transaction TX-94622 en échec : le prestataire de paiement n'a pas répondu (délai dépassé,>
 
 ```
-> [!NOTE] `-p err` permet de faire un filtre par priorité d'erreur: emerg, alert, crit et err. Il faut gérer ce genre d'érreur tout de suite après constat. 
+> [!NOTE] 
+>`-p err` permet de faire un filtre par priorité d'erreur: emerg, alert, crit et err. Il faut gérer ce genre d'érreur tout de suite après constat. 
 > On a l'heure et la date à laquelle l'incident s'est produit ainsi que la raison on peut maintenant traité la requête du client à partir du numéro de transaction `TX-94622`.
 
 ---
@@ -459,7 +468,8 @@ Nov 07 17:58:21 said mboa-paiement[52026]: Transaction TX-94622 en échec : le p
  du -ah  /srv/mboamarket/exports | sort -h | tail
 
 ```
-> [!TIPE] On identifie le fichier avec une taille anormale et on le suprime avec `rm`.
+> [!TIPE] 
+>On identifie le fichier avec une taille anormale et on le suprime avec `rm`.
 > Utiliser `sudo lsof -L1` pour voir si le dossier n'est pas utilisé par un procéssus encours et tué le si c'est le cas pour le noyaux libère effectivement le disque dur.
 
 ---
