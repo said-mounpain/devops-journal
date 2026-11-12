@@ -158,7 +158,7 @@ systemctl status mboa-api
 > Ceci suggère une érreur dans l'écriture du service;
 ### 2. On fouille dans le journal du service pour en savoir plus
 ```bash
-sudo journalctls -u mboa-api
+sudo journalctl -u mboa-api
 ```
 ```text
 Nov 07 17:58:21 said systemd[1]: Started mboa-api.service - API de Mboa Market (préproduction).
@@ -184,7 +184,7 @@ Nov 07 17:58:37 said systemd[1]: Failed to start mboa-api.service - API de Mboa 
  sudo nano /etc/systemd/system/mboa-api.service
 ```
 
-```text
+```ini
 [Unit]
 Description=API de Mboa Market (préproduction)
 After=network.target
@@ -206,7 +206,7 @@ WantedBy=multi-user.target
 
 ```
 
-> [!NOTE]
+> [!WARNING]
 > On peut observer que le chemin vers `api` n'est pas absolu 
 > il faut vérifier la librairie python installé dans notre machine
 
@@ -233,7 +233,7 @@ sudo nano /etc/systemd/system/mboa-api.service
 
 ```
 
-```text
+```ini
 [Unit]
 Description=API de Mboa Market (préproduction)
 After=network.target
@@ -360,7 +360,7 @@ date_jour=$(date '+%Y%m%d-%H%M')
 
 cp /srv/mboamarket/data/commandes.csv "$dossier/commandes-${date_jour}.csv"
 
-echo "Le fichiercommandes-{date_jour} a bien été sauvegardé"
+echo "Le fichiercommandes-${date_jour} a bien été sauvegardé"
 
 ```
 > [!NOTE] 
@@ -370,7 +370,7 @@ echo "Le fichiercommandes-{date_jour} a bien été sauvegardé"
 ```bash
 sudo nano /etc/systemd/system/mboa-sauvegarde.service
 ```
-```texte
+```ini
 [Unit]
 Description=Backup des commandes tous les 5 min
 
@@ -390,7 +390,7 @@ ExecStart=/bin/bash /usr/local/bin/mboa-sauvegarde
 sudo nano /etc/systemd/system/mboa-sauvegarde.timer
 
 ```
-```text
+```ini
 [Unit]
 Description=Sauvegarde toute les 5 min
 
@@ -402,7 +402,7 @@ Persistent=true
 WantedBy=timers.target
 
 ```
-> [!TIPE]
+> [!TIP]
 > c'est important de mettre `Persistent=true` pour que le timer puisse rattraper les tâches non faites en cas d'arrêt de la machine.
 > Vérifier la prochaine date du lancement du service avec `systemd-analyze calendar`
 ### 4- On active le timer 
@@ -468,7 +468,7 @@ Nov 07 17:58:21 said mboa-paiement[52026]: Transaction TX-94622 en échec : le p
  du -ah  /srv/mboamarket/exports | sort -h | tail
 
 ```
-> [!TIPE] 
+> [!TIP] 
 >On identifie le fichier avec une taille anormale et on le suprime avec `rm`.
 > Utiliser `sudo lsof -L1` pour voir si le dossier n'est pas utilisé par un procéssus encours et tué le si c'est le cas pour le noyaux libère effectivement le disque dur.
 
