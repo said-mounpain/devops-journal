@@ -13,13 +13,19 @@ Ce fichier documente les commandes de la **semaine 2**.
 
 | Ticket | Sujet | Statut |
 |---|---|---|
-| OPS-301 |Le compte de Nadia | ✅ |
-| OPS-302 |Le dossier du site | ✅ |
-| OPS-303 |Nginx sur le serveur | ✅ |
-| OPS-304 |Nadia livre la boutique |✅ |
-| OPS-305 |la boutique en ligne, avec nginx | ✅ |
-| OPS-306 | Défi : le disque se remplit |✅ |
-
+| OPS-301 | Le compte de Nadia | ✅ |
+| OPS-302 | Le dossier du site | ✅ |
+| OPS-303 | Nginx sur le serveur | ✅ |
+| OPS-304 | Nadia livre la boutique | ✅ |
+| OPS-305 | La boutique en ligne, avec ses journaux | ✅ |
+| OPS-306 | Le compte de l'API du stock | ✅ |
+| OPS-307 | L'API du stock devient un service | ✅ |
+| OPS-308 | La preuve : systemd relance l'API | ✅ |
+| OPS-309 | Nginx devant l'API | ✅ |
+| OPS-310 | Incident : les promotions en 403 | ✅ |
+| OPS-311 | Incident : le stock en 502 | ✅ |
+| OPS-312 | Défi : corriger l'outil de publication | ✅ |
+| OPS-313 | Le projet sur GitHub | ✅ |
 ---
 
 ## OPS-301 — Le compte de Nadia
